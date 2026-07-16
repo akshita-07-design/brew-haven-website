@@ -1,4 +1,7 @@
 node_modules/
+.output/
+.wrangler/
+.tanstack/
 dist/
 .env
 .env.local

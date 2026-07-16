@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Responsive viewport: enables mobile-first scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO: descriptive title + meta description -->
+  <title>Brew Haven — Specialty Coffee & Cozy Café in New Delhi</title>
+  <meta name="description" content="Brew Haven is a cozy specialty coffee shop serving hand-crafted espresso, slow-pour coffee, and fresh pastries. Dine-in, takeaway, free Wi-Fi, and catering." />
+  <meta name="theme-color" content="#3b2a1e" />
+
+  <!-- Open Graph / social share -->
+  <meta property="og:title" content="Brew Haven — Specialty Coffee & Cozy Café" />
+  <meta property="og:description" content="Hand-crafted espresso, slow-pour coffee, and fresh pastries in a warm, welcoming space." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=1600&q=80" />
+
+  <!-- Preconnect to image CDN for faster LCP -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Typography: serif display for headings, humanist sans for body -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- JSON-LD: helps search engines identify this as a local business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Brew Haven",
+    "image": "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=1600&q=80",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "42 Khan Market, Rajpath Lane",
+      "addressLocality": "New Delhi",
+      "addressRegion": "DL",
+      "postalCode": "110003",
+      "addressCountry": "IN"
+    },
+    "telephone": "+91-11-4000-0142",
+    "email": "hello@brewhaven.cafe",
+    "openingHours": "Mo-Fr 07:00-19:00, Sa-Su 08:00-20:00",
+    "servesCuisine": "Coffee, Pastries"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ============================================
+       NAVIGATION
+       Sticky bar with logo + anchor links.
+       Mobile uses a hamburger toggle (see script.js).
+       ============================================ -->
+  <header class="site-header" id="site-header">
+    <div class="container nav-inner">
+      <a href="#home" class="brand" aria-label="Brew Haven, home">
+        <span class="brand-mark" aria-hidden="true">☕</span>
+        <span class="brand-name">Brew Haven</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="Toggle navigation menu"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#menu" class="nav-link">Menu</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#gallery" class="nav-link">Gallery</a></li>
+          <li><a href="#pricing" class="nav-link">Pricing</a></li>
+          <li><a href="#reservations" class="nav-link">Reserve</a></li>
+          <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+          <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================
+         HERO
+         Full-bleed background image, headline, CTA.
+         Uses an overlay to keep type legible on photos.
+         ============================================ -->
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div class="hero-media" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="container hero-content reveal">
+        <p class="eyebrow">Est. 2014 · New Delhi, DL · ★ 4.9 / 5</p>
+        <h1 id="hero-title">Coffee that wakes you up.<br/>A space that slows you down.</h1>
+        <p class="hero-sub">
+          Hand-roasted single-origin beans, fresh-baked pastries every morning,
+          and the warmest corner on Khan Market — ready when you are.
+        </p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">Order Now</a>
+          <a href="#menu" class="btn btn-ghost">View Menu</a>
+        </div>
+
+        <!-- Animated stat counters add social proof at the fold -->
+        <ul class="hero-stats" role="list" aria-label="Brew Haven highlights">
+          <li><strong data-count="5000" data-suffix="+">0</strong><span>Cups served weekly</span></li>
+          <li><strong data-count="23">0</strong><span>Single-origin beans</span></li>
+          <li><strong data-count="10" data-suffix="+ yrs">0</strong><span>Roasting in New Delhi</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================
+         ABOUT
+         Two-column intro: photo + story.
+         Builds trust and conveys brand personality.
+         ============================================ -->
+    <section id="about" class="section about" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div class="about-media reveal">
+          <img
+            src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1000&q=80"
+            alt="Barista carefully pouring milk into a latte at Brew Haven"
+            loading="lazy"
+            width="1000" height="1250"
+          />
+        </div>
+        <div class="about-body reveal">
+          <p class="eyebrow eyebrow-dark">Our Story</p>
+          <h2 id="about-title">A neighborhood café built on craft and conversation.</h2>
+          <p>
+            Brew Haven started as a tiny cart on a rainy Saturday market in 2014.
+            Ten years later we're still chasing the same thing — coffee that tastes
+            of where it came from, served by people who love it, in a space that
+            feels like home.
+          </p>
+          <p>
+            We work directly with farmers in Ethiopia, Colombia, and Guatemala,
+            and roast every batch in the back room. Pull up a chair. Stay a while.
+          </p>
+          <ul class="about-stats" role="list">
+            <li><strong>10+</strong><span>Years brewing</span></li>
+            <li><strong>23</strong><span>Single-origin beans</span></li>
+            <li><strong>4.9★</strong><span>Local rating</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         MENU
+         Card grid of featured items: image, copy, price.
+         CSS Grid auto-fit keeps it tidy at every width.
+         ============================================ -->
+    <section id="menu" class="section section-cream" aria-labelledby="menu-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow eyebrow-dark">Featured</p>
+          <h2 id="menu-title">From bean to pastry case</h2>
+          <p class="section-sub">A few favorites from this season's menu. Full list in-store.</p>
+        </header>
+
+        <div class="menu-grid">
+          <!-- Each .menu-card is a single product. Rating, optional
+               "Best Seller" badge, and an Order button add interactivity. -->
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <span class="menu-badge">Best Seller</span>
+              <img src="https://images.unsplash.com/photo-1561882468-9110e03e0f78?auto=format&fit=crop&w=800&q=80" alt="Espresso shot in a small white cup" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Single-Origin Espresso</h3>
+                <span class="price">₹180</span>
+              </div>
+              <p>Bright, syrupy, with notes of dark cherry and cocoa.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.9 out of 5">★ 4.9 <small>(312)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <span class="menu-badge">Best Seller</span>
+              <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=800&q=80" alt="Cappuccino with latte art" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Honey Oat Cappuccino</h3>
+                <span class="price">₹260</span>
+              </div>
+              <p>Velvety oat milk, raw honey, double shot of house blend.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.8 out of 5">★ 4.8 <small>(248)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=800&q=80" alt="Pour-over coffee dripping into a glass server" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Ethiopia Yirgacheffe Pour-Over</h3>
+                <span class="price">₹320</span>
+              </div>
+              <p>Floral, tea-like, with bergamot and stone fruit.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.9 out of 5">★ 4.9 <small>(127)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <span class="menu-badge">Best Seller</span>
+              <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="Golden butter croissant on a plate" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Butter Croissant</h3>
+                <span class="price">₹150</span>
+              </div>
+              <p>72-hour fermented dough, laminated with cultured butter.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.7 out of 5">★ 4.7 <small>(189)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=800&q=80" alt="Matcha cake slice on a ceramic plate" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Matcha Tea Cake</h3>
+                <span class="price">₹220</span>
+              </div>
+              <p>Soft sponge with ceremonial-grade matcha and white chocolate.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.6 out of 5">★ 4.6 <small>(94)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-img">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Sourdough loaf cut open showing airy crumb" loading="lazy" width="800" height="800" />
+            </div>
+            <div class="menu-body">
+              <div class="menu-head">
+                <h3>Country Sourdough</h3>
+                <span class="price">₹380</span>
+              </div>
+              <p>Baked daily. Crackling crust, open crumb, deeply tangy.</p>
+              <div class="menu-foot">
+                <span class="rating" aria-label="Rated 4.8 out of 5">★ 4.8 <small>(76)</small></span>
+                <a href="#contact" class="btn-mini">Order</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SERVICES
+         Four equal cards with icons. Keeps copy scannable.
+         ============================================ -->
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow eyebrow-dark">What we offer</p>
+          <h2 id="services-title">Made for how you spend your day</h2>
+        </header>
+
+        <div class="services-grid">
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">🍽️</div>
+            <h3>Dine-In</h3>
+            <p>Sunlit seating, quiet corners, and a long communal table for the regulars.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">🥤</div>
+            <h3>Takeaway</h3>
+            <p>Compostable cups, fast service, and an order-ahead window most mornings.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">📶</div>
+            <h3>Free Wi-Fi</h3>
+            <p>Gigabit fiber, plenty of outlets, and a no-judgement policy on long lunches.</p>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-icon" aria-hidden="true">🎉</div>
+            <h3>Catering</h3>
+            <p>Coffee carts and pastry boxes for meetings, weddings, and weekend brunches.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         GALLERY
+         Responsive image grid. Uses object-fit to keep
+         aspect ratios consistent across photos.
+         ============================================ -->
+    <section id="gallery" class="section section-cream" aria-labelledby="gallery-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow eyebrow-dark">Gallery</p>
+          <h2 id="gallery-title">A peek inside Brew Haven</h2>
+        </header>
+
+        <div class="gallery-grid">
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Interior of Brew Haven with warm wood tables" loading="lazy" width="800" height="600" /></figure>
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1442975631115-c4f7b05b8a2c?auto=format&fit=crop&w=800&q=80" alt="Latte art being poured" loading="lazy" width="800" height="600" /></figure>
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=800&q=80" alt="Roasted coffee beans on a wooden surface" loading="lazy" width="800" height="600" /></figure>
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1559496417-e7f25cb247f3?auto=format&fit=crop&w=800&q=80" alt="Pastry display case full of croissants" loading="lazy" width="800" height="600" /></figure>
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80" alt="Barista smiling behind the counter" loading="lazy" width="800" height="600" /></figure>
+          <figure class="reveal"><img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?auto=format&fit=crop&w=800&q=80" alt="Outdoor seating with plants and string lights" loading="lazy" width="800" height="600" /></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         PRICING
+         Three-tier package cards. Middle card is "featured"
+         to anchor the eye and guide the choice (price anchoring).
+         ============================================ -->
+    <section id="pricing" class="section section-cream" aria-labelledby="pricing-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow eyebrow-dark">Packages</p>
+          <h2 id="pricing-title">Coffee plans &amp; event packages</h2>
+          <p class="section-sub">Pick a plan for your morning routine — or book us for your next event.</p>
+        </header>
+
+        <div class="pricing-grid">
+          <article class="price-card reveal">
+            <header class="price-head">
+              <h3>Daily Drip</h3>
+              <p class="price-tag"><span class="amt">₹499</span><span class="per">/month</span></p>
+              <p class="price-sub">For the everyday regular.</p>
+            </header>
+            <ul class="price-list" role="list">
+              <li>1 drip coffee or tea per day</li>
+              <li>10% off all pastries</li>
+              <li>Free refills before 10am</li>
+              <li>Members-only seasonal drinks</li>
+            </ul>
+            <a href="#reservations" class="btn btn-ghost-dark">Get Started</a>
+          </article>
+
+          <article class="price-card price-card-featured reveal">
+            <span class="price-badge">Most popular</span>
+            <header class="price-head">
+              <h3>Barista Club</h3>
+              <p class="price-tag"><span class="amt">₹999</span><span class="per">/month</span></p>
+              <p class="price-sub">For the serious caffeine enthusiast.</p>
+            </header>
+            <ul class="price-list" role="list">
+              <li>2 craft drinks per day (any size)</li>
+              <li>20% off pastries &amp; retail beans</li>
+              <li>Priority seating on weekends</li>
+              <li>Free monthly cupping session</li>
+              <li>Bring-a-friend pass each month</li>
+            </ul>
+            <a href="#reservations" class="btn btn-primary">Join Barista Club</a>
+          </article>
+
+          <article class="price-card reveal">
+            <header class="price-head">
+              <h3>Event Catering</h3>
+              <p class="price-tag"><span class="amt">₹14,999</span><span class="per">/event</span></p>
+              <p class="price-sub">From office mornings to weddings.</p>
+            </header>
+            <ul class="price-list" role="list">
+              <li>On-site espresso bar &amp; barista</li>
+              <li>Up to 75 drinks included</li>
+              <li>Pastry box for every 10 guests</li>
+              <li>Custom menu &amp; branded cups</li>
+            </ul>
+            <a href="#reservations" class="btn btn-ghost-dark">Book an Event</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         RESERVATIONS
+         Reserve a table. Date/time/party size with full
+         client-side validation in script.js.
+         ============================================ -->
+    <section id="reservations" class="section" aria-labelledby="reservations-title">
+      <div class="container reservations-grid">
+        <div class="reservations-intro reveal">
+          <p class="eyebrow eyebrow-dark">Reserve a table</p>
+          <h2 id="reservations-title">Save your favorite seat.</h2>
+          <p>Tables hold for 15 minutes past your reservation time. For parties of 8 or more, please call us directly.</p>
+          <ul class="reservation-notes" role="list">
+            <li>Open daily · 7am – 8pm</li>
+            <li>Parties up to 8 online</li>
+            <li>Free cancellation any time</li>
+          </ul>
+        </div>
+
+        <form class="reservation-form reveal" id="reservation-form" novalidate aria-describedby="reservation-status">
+          <div class="field">
+            <label for="r-name">Full name</label>
+            <input id="r-name" name="rname" type="text" autocomplete="name" required />
+            <small class="error" data-error-for="rname"></small>
+          </div>
+          <div class="field">
+            <label for="r-email">Email</label>
+            <input id="r-email" name="remail" type="email" autocomplete="email" required />
+            <small class="error" data-error-for="remail"></small>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="r-date">Date</label>
+              <input id="r-date" name="rdate" type="date" required />
+              <small class="error" data-error-for="rdate"></small>
+            </div>
+            <div class="field">
+              <label for="r-time">Time</label>
+              <input id="r-time" name="rtime" type="time" min="07:00" max="20:00" step="900" required />
+              <small class="error" data-error-for="rtime"></small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="r-party">Party size</label>
+            <input id="r-party" name="rparty" type="number" min="1" max="8" value="2" required />
+            <small class="error" data-error-for="rparty"></small>
+          </div>
+          <div class="field">
+            <label for="r-notes">Special requests <span class="optional">(optional)</span></label>
+            <textarea id="r-notes" name="rnotes" rows="3" maxlength="300"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Reserve Table</button>
+          <p class="form-status" id="reservation-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================
+         TESTIMONIALS
+         Three quote cards. Real names + roles add credibility.
+         ============================================ -->
+    <section id="testimonials" class="section" aria-labelledby="testimonials-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow eyebrow-dark">Kind words</p>
+          <h2 id="testimonials-title">Loved by the neighborhood</h2>
+        </header>
+
+        <div class="testimonial-grid">
+          <figure class="testimonial-card reveal">
+            <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+            <blockquote>“Best flat white in the city. The staff know my order and my dog's name.”</blockquote>
+            <figcaption>
+              <img class="t-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&h=160&q=80" alt="Maya R., regular customer" loading="lazy" width="56" height="56" />
+              <div>
+                <strong>Maya R.</strong><span>Designer · Regular since 2018</span>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card reveal">
+            <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+            <blockquote>“Their Yirgacheffe pour-over is a religious experience.”</blockquote>
+            <figcaption>
+              <img class="t-avatar" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=160&h=160&q=80" alt="Daniel K., coffee writer" loading="lazy" width="56" height="56" />
+              <div>
+                <strong>Daniel K.</strong><span>Coffee writer</span>
+              </div>
+            </figcaption>
+          </figure>
+          <figure class="testimonial-card reveal">
+            <div class="stars" aria-label="Rated 5 out of 5">★★★★★</div>
+            <blockquote>“We hired Brew Haven for our wedding. Guests still talk about it.”</blockquote>
+            <figcaption>
+              <img class="t-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=160&h=160&q=80" alt="Sofía and Jamie, wedding clients" loading="lazy" width="56" height="56" />
+              <div>
+                <strong>Sofía &amp; Jamie</strong><span>Married, June 2024</span>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CONTACT
+         Form + map. Form validation happens client-side in script.js.
+         ============================================ -->
+    <section id="contact" class="section section-dark" aria-labelledby="contact-title">
+      <div class="container contact-grid">
+        <div class="contact-intro reveal">
+          <p class="eyebrow eyebrow-light">Say hello</p>
+          <h2 id="contact-title">Come visit, or drop us a note.</h2>
+          <p>We answer emails Monday through Friday. For catering, please share your event date.</p>
+
+          <ul class="contact-meta" role="list">
+            <li><span>Address</span>42 Khan Market, Rajpath Lane, New Delhi, DL 110003</li>
+            <li><span>Phone</span><a href="tel:+911140000142">+91 11 4000 0142</a></li>
+            <li><span>Email</span><a href="mailto:hello@brewhaven.cafe">hello@brewhaven.cafe</a></li>
+            <li><span>Hours</span>Mon–Fri 7am–7pm · Sat 8am–8pm · Sun 8am–6pm</li>
+          </ul>
+
+          <!-- Social links for quick discovery -->
+          <ul class="contact-socials" role="list" aria-label="Social media">
+            <li><a href="#" aria-label="Brew Haven on Instagram">Instagram</a></li>
+            <li><a href="#" aria-label="Brew Haven on Facebook">Facebook</a></li>
+            <li><a href="#" aria-label="Brew Haven on X">X / Twitter</a></li>
+            <li><a href="#" aria-label="Brew Haven on TikTok">TikTok</a></li>
+          </ul>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+            <small class="error" data-error-for="name"></small>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <small class="error" data-error-for="email"></small>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            <small class="error" data-error-for="phone"></small>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <small class="error" data-error-for="message"></small>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="container">
+        <div class="map reveal" aria-label="Map showing Brew Haven location">
+          <iframe
+            title="Brew Haven location on Google Maps"
+            src="https://www.google.com/maps?q=Church+Street%2C+New Delhi&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================
+       FOOTER
+       Hours, address, contact, and social links.
+       ============================================ -->
+  <footer class="site-footer" aria-labelledby="footer-title">
+    <div class="container footer-grid">
+      <div class="footer-about">
+        <h2 id="footer-title" class="footer-brand">Brew Haven</h2>
+        <p>Specialty coffee, fresh pastries, and a warm seat by the window.</p>
+        <ul class="socials" aria-label="Social media">
+          <li><a href="#" aria-label="Brew Haven on Instagram">Instagram</a></li>
+          <li><a href="#" aria-label="Brew Haven on Facebook">Facebook</a></li>
+          <li><a href="#" aria-label="Brew Haven on X">X</a></li>
+          <li><a href="#" aria-label="Brew Haven on TikTok">TikTok</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#reservations">Reserve</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Visit</h3>
+        <ul>
+          <li>42 Khan Market, Rajpath Lane</li>
+          <li>New Delhi, DL 110003</li>
+          <li>Mon–Fri 7am–7pm</li>
+          <li>Sat 8am–8pm · Sun 8am–6pm</li>
+          <li><a href="tel:+911140000142">+91 11 4000 0142</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p>New beans, events, and the occasional secret menu drop. One short email a month.</p>
+        <form id="newsletter-form" class="newsletter-form" novalidate aria-label="Newsletter signup">
+          <label for="nl-email" class="sr-only">Email address</label>
+          <input id="nl-email" name="nl-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+          <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+          <p class="form-status" id="nl-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <small>© <span id="year"></span> Brew Haven Coffee Co. All rights reserved.</small>
+      <ul class="footer-legal" aria-label="Legal">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Scroll-to-top button (toggled via script.js) -->
+  <button id="to-top" class="to-top" aria-label="Scroll to top" hidden>↑</button>
+
+  <!-- AI Chat Widget -->
+  <div id="chatbot">
+
+    <button id="chat-toggle">
+      ☕
+    </button>
+
+    <div id="chat-window">
+
+      <div id="chat-header">
+        Brew Haven AI
+      </div>
+
+      <div id="chat-messages"></div>
+
+      <div id="chat-input-area">
+
+        <input
+          id="chat-input"
+          placeholder="Ask about our coffee..."
+        />
+
+        <button id="send-chat">
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="script.js" defer></script>
+</body>
+</html>

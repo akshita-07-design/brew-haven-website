@@ -31,7 +31,7 @@ export default function AIChat() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/chat", {
+      const res = await fetch("https://brew-haven-api.up.railway.app/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

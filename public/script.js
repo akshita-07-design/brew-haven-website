@@ -281,18 +281,6 @@
       rStatus.style.color = "";
       rStatus.textContent = `Thanks, ${name}! Table for ${party} on ${date} at ${time} — we'll email a confirmation shortly.`;
       rForm.reset();
-      const hour=new Date().getHours();
-
-      let greeting="";
-
-      if(hour<12)
-      greeting="Good Morning";
-
-      else if(hour<17)
-      greeting="Good Afternoon";
-
-      else
-      greeting="Good Evening";
     });
   }
 
@@ -373,123 +361,30 @@ if (
   sendChat
 ) {
 
-  /* ----------------------------
-     Open / Close Chat
-  -----------------------------*/
-
   chatToggle.addEventListener("click", () => {
 
     if (chatWindow.style.display === "block") {
-
       chatWindow.style.display = "none";
-
     } else {
-
       chatWindow.style.display = "block";
-
       chatInput.focus();
-
     }
 
   });
 
-  /* ----------------------------
-     Add Message
-  -----------------------------*/
+  function addMessage(text, cls) {
 
-  function addMessage(text, sender) {
+    const div = document.createElement("div");
 
-    const msg = document.createElement("div");
+    div.className = cls;
 
-    msg.className = `message ${sender}`;
+    div.textContent = text;
 
-    if (window.marked) {
-
-      msg.innerHTML = marked.parse(text);
-
-    } else {
-
-      msg.textContent = text;
-
-    }
-
-    chatMessages.appendChild(msg);
+    chatMessages.appendChild(div);
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
   }
-
-  /* ----------------------------
-     Welcome Message
-  -----------------------------*/
-
-  function showWelcome() {
-
-    if (chatMessages.children.length > 0) return;
-
-    addMessage(
-`# ☕
-
-Welcome to **Brew Haven**!
-
-I'm your personal digital barista.
-
-You can ask me about:
-
-- ☕ Coffee recommendations
-- 🍰 Desserts
-- 📍 Location
-- 🕒 Opening Hours
-- 📶 WiFi
-- 💻 Work-friendly seating`,
-      "bot"
-    );
-
-  }
-
-  showWelcome();
-
-  /* ----------------------------
-     Suggested Questions
-  -----------------------------*/
-
-  document.querySelectorAll(".suggestion").forEach(btn => {
-
-    btn.addEventListener("click", () => {
-
-      const empty = document.getElementById("empty-chat");
-
-      if (empty) empty.remove();
-
-      chatInput.value = btn.innerText;
-
-      sendMessage();
-
-    });
-
-  });
-
-  /* ----------------------------
-     Loading Messages
-  -----------------------------*/
-
-  const loadingTexts = [
-
-    "☕ Brewing your answer...",
-
-    "Checking today's menu...",
-
-    "Preparing a recommendation...",
-
-    "Talking to our barista...",
-
-    "Finding the perfect coffee..."
-
-  ];
-
-  /* ----------------------------
-     Send Message
-  -----------------------------*/
 
   async function sendMessage() {
 
@@ -497,105 +392,45 @@ You can ask me about:
 
     if (!message) return;
 
-    const empty = document.getElementById("empty-chat");
-
-    if (empty) empty.remove();
-
     addMessage(message, "user");
 
     chatInput.value = "";
-
-    const typing = document.createElement("div");
-
-    typing.className = "message bot typing";
-
-    typing.textContent =
-      loadingTexts[
-        Math.floor(Math.random() * loadingTexts.length)
-      ];
-
-    chatMessages.appendChild(typing);
-
-    chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
 
       const res = await fetch("https://brew-haven-api.up.railway.app/chat", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
+
         body: JSON.stringify({
           message
         })
+
       });
 
       const data = await res.json();
 
-      typing.remove();
-
       addMessage(data.reply, "bot");
 
-      /* ----------------------------
-         Product Card
-      -----------------------------*/
-
-      if (data.product) {
-
-        const card = document.createElement("div");
-
-        card.className = "product-card";
-
-        card.innerHTML = `
-
-          <img src="${data.product.image}" alt="${data.product.name}">
-
-          <h4>${data.product.name}</h4>
-
-          <p>${data.product.description}</p>
-
-          <strong>${data.product.price}</strong>
-
-        `;
-
-        chatMessages.appendChild(card);
-
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      }
-
-    } catch (err) {
-
-      typing.remove();
+    } catch {
 
       addMessage(
-     `Sorry, I couldn't connect to Brew Haven AI.
-
-      Please make sure the backend server is running.`,
+        "Sorry! AI server is offline.",
         "bot"
       );
-
-      console.error(err);
 
     }
 
   }
 
-  /* ----------------------------
-     Send Button
-  -----------------------------*/
-
   sendChat.addEventListener("click", sendMessage);
 
-  /* ----------------------------
-     Enter Key
-  -----------------------------*/
+  chatInput.addEventListener("keypress", function(e){
 
-  chatInput.addEventListener("keydown", e => {
-
-    if (e.key === "Enter") {
-
-      e.preventDefault();
+    if(e.key==="Enter"){
 
       sendMessage();
 
@@ -604,4 +439,4 @@ You can ask me about:
   });
 
 }
-})(); 
+})();

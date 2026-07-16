@@ -1,15 +1,23 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const Groq = require("groq-sdk");
 const menu = require("./menu.json");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
+
 /* ==========================================
-   Load all knowledge files
+   Load Knowledge Base
 ========================================== */
 
 const knowledgeFolder = path.join(__dirname, "knowledge");
@@ -26,14 +34,14 @@ const BUSINESS_CONTEXT = fs
   .join("\n\n");
 
 /* ==========================================
-   Conversation Memory
+   Memory
 ========================================== */
 
 let conversationHistory = [];
 
 let userProfile = {
-    favoriteDrink: "",
-    favoriteDessert: ""
+  favoriteDrink: "",
+  favoriteDessert: ""
 };
 
 /* ==========================================
@@ -44,84 +52,59 @@ app.post("/chat", async (req, res) => {
 
   const { message } = req.body;
 
-  if(message.toLowerCase().includes("latte")){
+  const lower = message.toLowerCase();
 
-      userProfile.favoriteDrink="Latte";
-
+  if (lower.includes("latte")) {
+    userProfile.favoriteDrink = "Latte";
   }
 
-  if(message.toLowerCase().includes("cappuccino")){
-
-      userProfile.favoriteDrink="Cappuccino";
-
+  if (lower.includes("cappuccino")) {
+    userProfile.favoriteDrink = "Cappuccino";
   }
 
-  if(message.toLowerCase().includes("mocha")){
-
-     userProfile.favoriteDrink="Mocha";
- 
+  if (lower.includes("mocha")) {
+    userProfile.favoriteDrink = "Mocha";
   }
-  // Save user message
+
   conversationHistory.push({
     role: "Customer",
-    content: message.trim()
+    content: message
   });
 
-  // Keep only latest 20 messages
   if (conversationHistory.length > 20) {
-    conversationHistory = conversationHistory.slice(-6);
+    conversationHistory = conversationHistory.slice(-20);
   }
 
   const history = conversationHistory
     .map(msg => `${msg.role}: ${msg.content}`)
     .join("\n");
 
-  /* ==========================================
-     Prompt
-  ========================================== */
-
   const prompt = `
 You are Brew Haven AI.
 
 You are the friendly digital barista of Brew Haven.
 
-Your personality:
+Personality:
 
 - Friendly
 - Warm
 - Professional
-- Enthusiastic
 - Helpful
-- Knowledgeable
+- Enthusiastic
 
 Rules:
 
+- Never mention AI.
 - Speak naturally.
-- Never say you are an AI language model.
-- Always speak like a real Brew Haven employee.
-- Recommend drinks and food whenever suitable.
-- Ask follow-up questions if the customer is unsure.
-- Keep replies between 50 and 120 words.
-- Use emojis occasionally (☕😊).
-- End with a friendly suggestion when appropriate.
+- Recommend products whenever appropriate.
+- Keep replies around 80 words.
+- Use emojis occasionally ☕😊
 
-Use the Brew Haven knowledge below as your PRIMARY source.
-
-You may answer general coffee questions using your own knowledge.
-
-Never invent Brew Haven information that is not in the knowledge files.
-
-If you don't know a Brew Haven-specific answer, politely say so.
-
-==========================
-BREW HAVEN KNOWLEDGE
-==========================
+Brew Haven Information:
 
 ${BUSINESS_CONTEXT}
 
-==========================
-CONVERSATION HISTORY
-==========================
+Conversation:
 
 ${history}
 
@@ -130,62 +113,66 @@ Assistant:
 
   try {
 
-    const response = await fetch(
-      "http://localhost:11434/api/generate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "llama3.2",
-          prompt,
-          stream: false,
-        }),
-      }
-    );
+    const completion =
+      await groq.chat.completions.create({
 
-    if (!response.ok) {
-      throw new Error("Ollama returned an error.");
-    }
+        model: "llama-3.3-70b-versatile",
 
-    const data = await response.json();
+        messages: [
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+
+        temperature: 0.7,
+
+        max_tokens: 350
+      });
 
     const reply =
-      data.response ||
-      "I'm sorry, I couldn't think of a response right now.";
+      completion.choices[0].message.content;
 
-    // Save assistant reply
     conversationHistory.push({
       role: "Assistant",
       content: reply
     });
 
-    // Keep latest 20 messages
     if (conversationHistory.length > 20) {
-      conversationHistory = conversationHistory.slice(-6);
+      conversationHistory =
+        conversationHistory.slice(-20);
     }
 
     let product = null;
 
     if (reply.toLowerCase().includes("espresso")) {
-      product = menu.find(item => item.name === "Espresso");
+      product = menu.find(
+        item => item.name === "Espresso"
+      );
     }
 
     else if (reply.toLowerCase().includes("flat white")) {
-      product = menu.find(item => item.name === "Flat White");
+      product = menu.find(
+        item => item.name === "Flat White"
+      );
     }
 
     else if (reply.toLowerCase().includes("caramel latte")) {
-      product = menu.find(item => item.name === "Caramel Latte");
+      product = menu.find(
+        item => item.name === "Caramel Latte"
+      );
     }
 
     else if (reply.toLowerCase().includes("cappuccino")) {
-      product = menu.find(item => item.name === "Cappuccino");
+      product = menu.find(
+        item => item.name === "Cappuccino"
+      );
     }
 
     else if (reply.toLowerCase().includes("mocha")) {
-      product = menu.find(item => item.name === "Mocha");
+      product = menu.find(
+        item => item.name === "Mocha"
+      );
     }
 
     res.json({
@@ -193,34 +180,15 @@ Assistant:
       product
     });
 
-    const lower = message.toLowerCase();
+  }
 
-    if (lower.includes("opening")) {
-        return res.json({
-            reply: "We're open every day from 7 AM to 8 PM ☕"
-        });
-    }
+  catch (err) {
 
-    if (lower.includes("wifi")) {
-        return res.json({
-            reply: "Yes! We have free high-speed WiFi for all customers."
-        });
-    }
-
-    if (lower.includes("latte")) {
-        return res.json({
-            reply: "Our Caramel Latte is one of our best sellers. It's smooth, creamy and topped with rich caramel. ☕",
-            product: menu.find(i=>i.name==="Caramel Latte")
-         });
-    } 
-
-  } catch (err) {
-
-    console.error("AI Error:", err);
+    console.error(err);
 
     res.status(500).json({
       reply:
-        "Sorry! I'm having trouble connecting to Brew Haven AI right now. Please try again in a moment."
+        "Sorry! I'm having trouble connecting to Brew Haven AI right now."
     });
 
   }

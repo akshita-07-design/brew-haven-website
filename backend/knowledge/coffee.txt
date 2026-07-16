@@ -1,0 +1,42 @@
+Coffee Menu
+
+Espresso
+Rich, bold and intense.
+
+Americano
+Espresso with hot water for a smoother taste.
+
+Cappuccino
+Equal parts espresso, steamed milk and milk foam.
+
+Latte
+Smooth espresso with steamed milk.
+
+Mocha
+Espresso with chocolate and steamed milk.
+
+Flat White
+Velvety milk with a stronger espresso flavor.
+
+Cold Brew
+Slow brewed for 18 hours.
+Smooth and refreshing.
+
+Iced Latte
+Cold espresso with milk over ice.
+
+Recommendations
+
+If a customer likes strong coffee:
+Recommend Espresso or Flat White.
+
+If a customer likes sweet coffee:
+Recommend Mocha.
+
+If a customer likes creamy coffee:
+Recommend Latte.
+
+If a customer likes cold drinks:
+Recommend Cold Brew or Iced Latte.
+
+Always explain WHY you recommend the drink.

@@ -638,6 +638,71 @@
   <!-- Scroll-to-top button (toggled via script.js) -->
   <button id="to-top" class="to-top" aria-label="Scroll to top" hidden>↑</button>
 
+  <!-- AI Chat Widget -->
+  <div id="chatbot">
+
+    <button id="chat-toggle">
+      ☕
+    </button>
+
+    <div id="chat-window">
+
+      <div id="chat-header">
+        Brew Haven AI
+      </div>
+
+      <div id="chat-messages">
+
+      <div id="empty-chat">
+
+      <h3>☕ Welcome to Brew Haven</h3>
+
+      <p>Your personal digital barista.</p>
+
+      <div class="suggestions">
+
+      <button class="suggestion">
+         ☕ Recommend a coffee
+      </button>
+
+      <button class="suggestion">
+         🍰 What desserts do you have?
+      </button>
+
+      <button class="suggestion">
+         🕒 What are your opening hours?
+      </button>
+
+      <button class="suggestion">
+         📍 Where are you located?
+      </button>
+
+      </div>
+
+      </div>
+
+      </div>
+    
+      <div id="chat-input-area">
+
+        <input
+          id="chat-input"
+          placeholder="Ask about our coffee..."
+        />
+
+        <button id="send-chat">
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="script.js" defer></script>
+    <button id="send-btn">Send</button>
+  </div>
+</div>
 </body>
 </html>

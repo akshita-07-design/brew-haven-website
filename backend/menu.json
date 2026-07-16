@@ -1,0 +1,14 @@
+[
+  {
+    "name":"Caramel Latte",
+    "price":"₹220",
+    "image":"images/caramel-latte.jpg",
+    "description":"Smooth espresso with caramel."
+  },
+  {
+    "name":"Mocha Supreme",
+    "price":"₹240",
+    "image":"images/mocha.jpg",
+    "description":"Chocolate meets espresso."
+  }
+]

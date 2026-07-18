@@ -1,0 +1,95 @@
+BREW HAVEN MENU
+
+COFFEE
+
+Espresso
+A rich and concentrated shot of coffee with bold flavor.
+Recommended for customers who enjoy strong coffee.
+
+Cappuccino
+Espresso with steamed milk and thick milk foam.
+Balanced, creamy, and one of our most popular drinks.
+
+Flat White
+Espresso with silky steamed milk and light microfoam.
+Ideal for customers wanting a stronger coffee taste.
+
+Caramel Latte
+Espresso, steamed milk, and caramel syrup.
+Sweet, smooth, and perfect for first-time coffee drinkers.
+
+Mocha
+Espresso blended with chocolate and steamed milk.
+Recommended for customers who love chocolate.
+
+Americano
+Espresso diluted with hot water for a smooth, less intense coffee.
+
+Cold Coffee
+Chilled blended coffee served over ice.
+Refreshing and ideal during warm weather.
+
+ICED DRINKS
+
+Iced Latte
+
+Iced Mocha
+
+Iced Americano
+
+Cold Brew (Seasonal)
+
+DESSERTS
+
+Cheesecake
+
+Chocolate Brownie
+
+Chocolate Cookie
+
+Butter Croissant
+
+Fresh Muffin
+
+POPULAR COMBINATIONS
+
+Caramel Latte + Chocolate Cookie
+
+Cappuccino + Croissant
+
+Flat White + Cheesecake
+
+Mocha + Chocolate Brownie
+
+Espresso + Cheesecake
+
+BEST SELLERS
+
+Caramel Latte
+
+Cappuccino
+
+Mocha
+
+Chocolate Brownie
+
+Cheesecake
+
+RECOMMENDATION RULES
+
+If a customer is visiting for the first time:
+Recommend Caramel Latte.
+
+If the customer likes strong coffee:
+Recommend Espresso or Flat White.
+
+If the customer likes sweet drinks:
+Recommend Caramel Latte or Mocha.
+
+If the customer wants something light:
+Recommend Cappuccino with a Croissant.
+
+If the customer asks for dessert:
+Suggest Cheesecake or Chocolate Brownie depending on whether they prefer creamy or chocolate desserts.
+
+Always explain why a recommendation suits the customer's preferences.

@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "name": "Espresso",
+    "category": "Coffee",
+    "price": 120,
+    "description": "A bold and concentrated shot of premium coffee with a rich aroma and smooth crema.",
+    "image": "/images/espresso.jpg",
+    "recommendedFor": ["Strong Coffee", "Coffee Lovers", "Morning Boost"]
+  },
+  {
+    "id": 2,
+    "name": "Americano",
+    "category": "Coffee",
+    "price": 140,
+    "description": "Espresso diluted with hot water for a smooth, balanced taste.",
+    "image": "/images/americano.jpg",
+    "recommendedFor": ["Light Coffee", "Daily Coffee"]
+  },
+  {
+    "id": 3,
+    "name": "Cappuccino",
+    "category": "Coffee",
+    "price": 180,
+    "description": "Espresso with steamed milk and thick milk foam.",
+    "image": "/images/cappuccino.jpg",
+    "recommendedFor": ["Creamy Coffee", "Classic Coffee"]
+  },
+  {
+    "id": 4,
+    "name": "Flat White",
+    "category": "Coffee",
+    "price": 190,
+    "description": "Rich espresso with silky steamed milk and light microfoam.",
+    "image": "/images/flatwhite.jpg",
+    "recommendedFor": ["Strong Coffee", "Smooth Texture"]
+  },
+  {
+    "id": 5,
+    "name": "Caramel Latte",
+    "category": "Coffee",
+    "price": 220,
+    "description": "Smooth espresso blended with steamed milk and rich caramel syrup.",
+    "image": "/images/caramellatte.jpg",
+    "recommendedFor": ["Sweet Coffee", "Beginners", "Best Seller"]
+  },
+  {
+    "id": 6,
+    "name": "Mocha",
+    "category": "Coffee",
+    "price": 220,
+    "description": "Espresso mixed with chocolate and steamed milk.",
+    "image": "/images/mocha.jpg",
+    "recommendedFor": ["Chocolate Lovers", "Sweet Coffee"]
+  },
+  {
+    "id": 7,
+    "name": "Cold Coffee",
+    "category": "Cold Coffee",
+    "price": 200,
+    "description": "Refreshing chilled coffee blended with milk and ice.",
+    "image": "/images/coldcoffee.jpg",
+    "recommendedFor": ["Summer", "Refreshing"]
+  },
+  {
+    "id": 8,
+    "name": "Iced Latte",
+    "category": "Cold Coffee",
+    "price": 210,
+    "description": "Espresso served over ice with chilled milk.",
+    "image": "/images/icedlatte.jpg",
+    "recommendedFor": ["Cold Coffee", "Smooth"]
+  },
+  {
+    "id": 9,
+    "name": "Iced Mocha",
+    "category": "Cold Coffee",
+    "price": 220,
+    "description": "Chocolate espresso served cold over ice.",
+    "image": "/images/icedmocha.jpg",
+    "recommendedFor": ["Chocolate Lovers"]
+  },
+  {
+    "id": 10,
+    "name": "Cheesecake",
+    "category": "Dessert",
+    "price": 240,
+    "description": "Creamy baked cheesecake with a buttery biscuit base.",
+    "image": "/images/cheesecake.jpg",
+    "recommendedFor": ["Dessert", "Best Seller"]
+  },
+  {
+    "id": 11,
+    "name": "Chocolate Brownie",
+    "category": "Dessert",
+    "price": 180,
+    "description": "Rich, fudgy chocolate brownie served fresh.",
+    "image": "/images/brownie.jpg",
+    "recommendedFor": ["Chocolate Lovers"]
+  },
+  {
+    "id": 12,
+    "name": "Butter Croissant",
+    "category": "Dessert",
+    "price": 120,
+    "description": "Freshly baked buttery croissant with flaky layers.",
+    "image": "/images/croissant.jpg",
+    "recommendedFor": ["Breakfast", "Light Snack"]
+  },
+  {
+    "id": 13,
+    "name": "Chocolate Cookie",
+    "category": "Dessert",
+    "price": 80,
+    "description": "Crunchy outside with a soft chocolate-filled center.",
+    "image": "/images/cookie.jpg",
+    "recommendedFor": ["Snack", "Kids"]
+  },
+  {
+    "id": 14,
+    "name": "Fresh Muffin",
+    "category": "Dessert",
+    "price": 150,
+    "description": "Soft freshly baked muffin available in seasonal flavors.",
+    "image": "/images/muffin.jpg",
+    "recommendedFor": ["Breakfast", "Coffee Pairing"]
+  }
+]

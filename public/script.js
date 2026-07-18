@@ -398,7 +398,7 @@ if (
 
     try {
 
-      const res = await fetch("https://brew-haven-api.up.railway.app/chat", {
+      const res = await fetch("/api/chat", {
         method: "POST",
 
         headers: {

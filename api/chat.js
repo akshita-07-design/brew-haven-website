@@ -559,20 +559,6 @@ Respond naturally as Brew Haven's friendly barista.
         conversationHistory.slice(-20);
     }
 
-    // ==========================================
-    // Save AI Reply
-    // ==========================================
-
-    conversationHistory.push({
-      role: "Assistant",
-      content: reply
-    });
-
-    if (conversationHistory.length > 20) {
-      conversationHistory =
-        conversationHistory.slice(-20);
-    }
-
 // ==========================================
 // Detect Recommended Product
 // ==========================================

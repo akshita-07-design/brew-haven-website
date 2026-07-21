@@ -7,6 +7,7 @@ type Message = {
 };
 
 export default function AIChat() {
+  console.log("AIChat Version 2");
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

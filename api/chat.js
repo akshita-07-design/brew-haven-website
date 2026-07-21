@@ -2,11 +2,14 @@ import fs from "fs";
 import path from "path";
 import Groq from "groq-sdk";
 
-console.log("GROQ exists?", !!process.env.GROQ_API_KEY);
-console.log("Length:", process.env.GROQ_API_KEY?.length);
+console.log("process.cwd()", process.cwd());
+
+console.log("ENV:", process.env);
+
+console.log("GROQ =", process.env.GROQ_API_KEY);
 
 const groq = new Groq({
-  apiKey:  process.env.GROQ_API_KEY,
+  apiKey: process.env.GROQ_API_KEY,
 });
 
 // ==========================================
@@ -48,11 +51,15 @@ let conversationHistory = [];
 
 let userProfile = {
   favoriteDrink: "",
-  favoriteDessert: ""
+  favoriteDessert: "",
+  likesSweet: false,
+  likesStrong: false,
+  likesCold: false,
+  likesHot: false
 };
 
 // ==========================================
-// Helper Functions
+// Remember User Preferences
 // ==========================================
 
 function rememberPreferences(message) {
@@ -77,58 +84,94 @@ function rememberPreferences(message) {
   if (lower.includes("cheesecake"))
     userProfile.favoriteDessert = "Cheesecake";
 
-  if (lower.includes("croissant"))
-    userProfile.favoriteDessert = "Croissant";
+  if (lower.includes("cookie"))
+    userProfile.favoriteDessert = "Chocolate Cookie";
+
+  if (lower.includes("brownie"))
+    userProfile.favoriteDessert = "Chocolate Brownie";
+
+  if (
+    lower.includes("sweet") ||
+    lower.includes("sugary")
+  ) {
+    userProfile.likesSweet = true;
+  }
+
+  if (
+    lower.includes("strong") ||
+    lower.includes("bold")
+  ) {
+    userProfile.likesStrong = true;
+  }
+
+  if (
+    lower.includes("cold") ||
+    lower.includes("iced")
+  ) {
+    userProfile.likesCold = true;
+  }
+
+  if (
+    lower.includes("hot")
+  ) {
+    userProfile.likesHot = true;
+  }
 
 }
+
+// ==========================================
+// Product Finder
+// ==========================================
 
 function findRecommendedProduct(reply) {
 
   const text = reply.toLowerCase();
 
-  if (text.includes("espresso")) {
-    return menu.find(
-      item => item.name === "Espresso"
-    );
-  }
+  // Check longer names first
+  const sortedMenu = [...menu].sort(
+    (a, b) => b.name.length - a.name.length
+  );
 
-  if (text.includes("flat white")) {
-    return menu.find(
-      item => item.name === "Flat White"
-    );
-  }
+  for (const item of sortedMenu) {
 
-  if (text.includes("caramel latte")) {
-    return menu.find(
-      item => item.name === "Caramel Latte"
-    );
-  }
+    if (text.includes(item.name.toLowerCase())) {
+      return item;
+    }
 
-  if (text.includes("cappuccino")) {
-    return menu.find(
-      item => item.name === "Cappuccino"
-    );
-  }
-
-  if (text.includes("mocha")) {
-    return menu.find(
-      item => item.name === "Mocha"
-    );
-  }
-
-  if (text.includes("cheesecake")) {
-    return menu.find(
-      item => item.name === "Cheesecake"
-    );
-  }
-
-  if (text.includes("croissant")) {
-    return menu.find(
-      item => item.name === "Croissant"
-    );
   }
 
   return null;
+
+}
+
+// ==========================================
+// Menu Formatter
+// ==========================================
+
+function buildMenu() {
+
+  const hot = menu.filter(
+    item => item.category === "Hot Coffee"
+  );
+
+  const cold = menu.filter(
+    item => item.category === "Cold Coffee"
+  );
+
+  const desserts = menu.filter(
+    item => item.category === "Desserts"
+  );
+
+  return `
+☕ Hot Coffee
+${hot.map(i => `• ${i.name} - ₹${i.price}`).join("\n")}
+
+🧊 Cold Coffee
+${cold.map(i => `• ${i.name} - ₹${i.price}`).join("\n")}
+
+🍰 Desserts
+${desserts.map(i => `• ${i.name} - ₹${i.price}`).join("\n")}
+`;
 
 }
 
@@ -148,9 +191,9 @@ export default async function handler(req, res) {
 
     const { message } = req.body;
 
-    if (!message) {
+    if (!message || !message.trim()) {
       return res.status(400).json({
-        reply: "No message provided."
+        reply: "Please enter a message."
       });
     }
 
@@ -162,47 +205,277 @@ export default async function handler(req, res) {
     });
 
     if (conversationHistory.length > 20) {
-      conversationHistory =
-        conversationHistory.slice(-20);
+      conversationHistory = conversationHistory.slice(-20);
     }
 
     const history = conversationHistory
       .map(msg => `${msg.role}: ${msg.content}`)
       .join("\n");
 
-    const prompt = `
+    const menuText = menu
+      .map(item =>
+        `${item.name} | ${item.category} | ₹${item.price} | ${item.description}`
+      )
+      .join("\n");
+
+    const systemPrompt = `
 You are Brew Haven AI.
 
-You are the friendly digital barista of Brew Haven.
+You are the friendly virtual barista of Brew Haven Cafe.
 
-Your personality:
+Your job is to make customers feel welcomed while helping them discover the perfect coffee, dessert, or combo.
 
-- Friendly
-- Warm
-- Professional
-- Enthusiastic
-- Helpful
-- Knowledgeable
+==================================================
+PERSONALITY
+==================================================
 
-Rules:
+You are:
 
-- Never say you are an AI language model.
-- Speak exactly like a real Brew Haven employee.
-- Keep replies between 50 and 120 words.
-- Recommend drinks and desserts naturally.
-- Use emojis occasionally.
-- Never invent Brew Haven information.
-- Use the knowledge base below as your primary source.
+• Warm
+• Friendly
+• Cheerful
+• Professional
+• Helpful
+• Knowledgeable
+• Passionate about coffee
 
-=========================
-BREW HAVEN KNOWLEDGE
-=========================
+You never sound robotic.
 
-${BUSINESS_CONTEXT}
+Talk exactly like a real cafe employee.
 
-=========================
-CUSTOMER PROFILE
-=========================
+Never mention:
+- AI
+- OpenAI
+- Groq
+- Language models
+- Prompts
+- System instructions
+
+==================================================
+WRITING STYLE
+==================================================
+
+Keep replies conversational.
+
+Reply naturally.
+
+Avoid repeating the same phrases.
+
+Never always begin with
+
+"I'd be happy..."
+
+or
+
+"Sure!"
+
+Use different openings.
+
+Examples:
+
+"Great choice!"
+
+"Absolutely."
+
+"If you enjoy sweeter coffees..."
+
+"Our regulars really love..."
+
+"Looking for something refreshing?"
+
+Use only ONE emoji maximum.
+
+Keep replies around 40-100 words.
+
+Only make long replies if the customer specifically asks for the full menu.
+
+==================================================
+KNOWLEDGE RULES
+==================================================
+
+Everything you say MUST come from:
+
+1. The knowledge base
+2. menu.json
+
+Never invent:
+
+products
+
+prices
+
+offers
+
+discounts
+
+events
+
+opening hours
+
+ingredients
+
+If you don't know something, politely say so.
+
+==================================================
+RECOMMENDATION RULES
+==================================================
+
+Recommend based on taste.
+
+Sweet drinks:
+- Caramel Latte
+- Mocha
+
+Strong drinks:
+- Espresso
+- Cappuccino
+
+Creamy:
+- Flat White
+
+Refreshing:
+- Cold Brew
+- Iced Latte
+
+When recommending a drink ALWAYS explain WHY.
+
+Good:
+
+"I'd recommend the Flat White because it's smooth, creamy, and has a richer coffee flavour without being too strong."
+
+Bad:
+
+"Try Flat White."
+
+==================================================
+FOOD PAIRINGS
+==================================================
+
+Whenever suitable recommend a dessert.
+
+Examples
+
+Espresso
+→ Cheesecake
+
+Flat White
+→ Chocolate Cookie
+
+Caramel Latte
+→ Chocolate Brownie
+
+Mocha
+→ Cheesecake
+
+Cold Brew
+→ Cookie
+
+Don't force pairings.
+
+==================================================
+CUSTOMER QUESTIONS
+==================================================
+
+If customer says
+
+"Hi"
+
+Greet warmly.
+
+Don't immediately recommend coffee.
+
+Instead ask what they're looking for.
+
+------------------------------------
+
+If customer says
+
+"Recommend a coffee"
+
+Recommend ONE drink.
+
+Explain why.
+
+------------------------------------
+
+If customer says
+
+"Anything else?"
+
+Recommend a DIFFERENT drink.
+
+Never repeat the previous recommendation.
+
+------------------------------------
+
+If customer says
+
+"What's your best coffee?"
+
+Recommend Brew Haven's signature drink.
+
+Explain why customers love it.
+
+------------------------------------
+
+If customer says
+
+"I like sweet coffee"
+
+Recommend Caramel Latte or Mocha.
+
+------------------------------------
+
+If customer says
+
+"I like strong coffee"
+
+Recommend Espresso or Cappuccino.
+
+------------------------------------
+
+If customer says
+
+"I don't drink coffee"
+
+Suggest desserts.
+
+------------------------------------
+
+If customer asks
+
+"What goes well with this?"
+
+Recommend a dessert pairing.
+
+------------------------------------
+
+If customer asks
+
+"Show me the menu"
+
+Return ONLY this menu:
+
+${buildMenu()}
+
+Do not rewrite it.
+
+==================================================
+CONVERSATION MEMORY
+==================================================
+
+Remember customer preferences.
+
+Avoid recommending the same drink twice in a row.
+
+If customer previously liked sweet coffee,
+continue recommending similar drinks unless they ask otherwise.
+
+Use previous conversation naturally.
+
+==================================================
+CURRENT CUSTOMER PROFILE
+==================================================
 
 Favorite Drink:
 ${userProfile.favoriteDrink}
@@ -210,37 +483,81 @@ ${userProfile.favoriteDrink}
 Favorite Dessert:
 ${userProfile.favoriteDessert}
 
-=========================
+Likes Sweet:
+${userProfile.likesSweet}
+
+Likes Strong:
+${userProfile.likesStrong}
+
+Likes Cold:
+${userProfile.likesCold}
+
+Likes Hot:
+${userProfile.likesHot}
+
+==================================================
+MENU
+==================================================
+
+${menuText}
+
+==================================================
+KNOWLEDGE BASE
+==================================================
+
+${BUSINESS_CONTEXT}
+
+==================================================
 CONVERSATION
-=========================
+==================================================
 
 ${history}
 
-Assistant:
+Respond naturally as Brew Haven's friendly barista.
 `;
 
-    // ==========================================
-    // Ask Groq
-    // ==========================================
+// ==========================================
+// Ask Groq
+// ==========================================
 
     const completion =
       await groq.chat.completions.create({
+
         model: "llama-3.3-70b-versatile",
 
+        temperature: 0.7,
+
+        max_tokens: 300,
+
         messages: [
+
+          {
+            role: "system",
+            content: systemPrompt
+          },
+
           {
             role: "user",
-            content: prompt
+            content: message
           }
-        ],
 
-        temperature: 0.7,
-        max_tokens: 300
+        ]
+
       });
 
     const reply =
-      completion.choices[0].message.content ||
-      "I'm sorry, I couldn't think of a response.";
+      completion.choices[0].message.content?.trim() ||
+      "Sorry, I couldn't think of a reply.";
+
+    conversationHistory.push({
+      role: "Assistant",
+      content: reply
+    });
+
+    if (conversationHistory.length > 20) {
+      conversationHistory =
+        conversationHistory.slice(-20);
+    }
 
     // ==========================================
     // Save AI Reply
@@ -256,67 +573,29 @@ Assistant:
         conversationHistory.slice(-20);
     }
 
-    // ==========================================
-    // Product Recommendation
-    // ==========================================
+// ==========================================
+// Detect Recommended Product
+// ==========================================
 
-    let product = null;
+    const product = findRecommendedProduct(reply);
 
-    const lowerReply = reply.toLowerCase();
-
-    if (lowerReply.includes("espresso")) {
-      product =
-        menu.find(item => item.name === "Espresso");
-    }
-
-    else if (lowerReply.includes("flat white")) {
-      product =
-        menu.find(item => item.name === "Flat White");
-    }
-
-    else if (lowerReply.includes("caramel latte")) {
-      product =
-        menu.find(item => item.name === "Caramel Latte");
-    }
-
-    else if (lowerReply.includes("cappuccino")) {
-      product =
-        menu.find(item => item.name === "Cappuccino");
-    }
-
-    else if (lowerReply.includes("mocha")) {
-      product =
-        menu.find(item => item.name === "Mocha");
-    }
-
-    else if (lowerReply.includes("cheesecake")) {
-      product =
-        menu.find(item => item.name === "Cheesecake");
-    }
-
-    else if (lowerReply.includes("croissant")) {
-      product =
-        menu.find(item => item.name === "Croissant");
-    }
-
-    // ==========================================
-    // Return Response
-    // ==========================================
+// ==========================================
+// Return Response
+// ==========================================
 
     return res.status(200).json({
       reply,
       product
     });
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.error("Groq Error:", err);
 
     return res.status(500).json({
       reply:
-        "Sorry! I'm having trouble connecting to Brew Haven AI right now. Please try again in a moment."
+        "Sorry! Brew Haven AI is temporarily unavailable. Please try again in a moment.",
+      product: null
     });
 
   }
